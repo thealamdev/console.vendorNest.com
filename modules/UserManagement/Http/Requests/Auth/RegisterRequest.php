@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\UserManagement\Http\Requests;
+namespace Modules\UserManagement\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -28,6 +28,4 @@ class RegisterRequest extends FormRequest
             'password'  => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }
-
-    
 }

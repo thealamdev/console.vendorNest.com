@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Modules\UserManagement\Enums\OrganizationType;
 
 return new class extends Migration
 {
@@ -14,7 +15,7 @@ return new class extends Migration
         Schema::create('organizations', function (Blueprint $table) {
             $table->ulid('id')->primary();
             $table->foreignUlid('owner_user_id')->constrained('users');
-            $table->enum('type', ['platform', 'vendor']);
+            $table->enum('type', [OrganizationType::values()]);
             $table->string('name');
             $table->string('slug');
             $table->string('email');

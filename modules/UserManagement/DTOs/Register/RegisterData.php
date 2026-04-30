@@ -2,7 +2,7 @@
 
 namespace Modules\UserManagement\DTOs\Register;
 
-use Modules\UserManagement\Http\Requests\RegisterRequest;
+use Modules\UserManagement\Http\Requests\Auth\RegisterRequest;
 
 class RegisterData
 {
