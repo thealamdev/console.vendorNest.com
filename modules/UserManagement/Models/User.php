@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Modules\UserManagement\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\Fillable;

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace Modules\UserManagement\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 
-class Permission extends Model
+class Role extends Model
 {
     use HasUlids;
-    protected $table = 'permissions';
+    protected $table = 'roles';
 }

@@ -1,14 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\UserManagement\Http\Controllers\RegisterController;
 
-Route::domain('{account}.127.0.0.1.nip.io')->group(function () {
-
-    Route::get('/user', function ($account) {
-        return response()->json([
-            'message' => 'Tenant API Working Successfully',
-            'account' => $account,
-        ]);
-    });
-    
-});
+Route::post('/register', RegisterController::class);
