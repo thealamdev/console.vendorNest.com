@@ -13,6 +13,11 @@ class RegisterAction
 
     public function execute(RegisterData $data)
     {
-        return $this->repo->register($data);
+        $user = $this->repo->register($data);
+        $token = $user->createToken('auth_token')->plainTextToken;
+        return [
+            'user' => $user,
+            'token' => $token,
+        ];
     }
 }
