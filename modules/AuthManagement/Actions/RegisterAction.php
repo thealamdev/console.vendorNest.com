@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\UserManagement\Actions;
+namespace Modules\AuthManagement\Actions;
 
-use Modules\UserManagement\DTOs\Register\RegisterData;
-use Modules\UserManagement\Repositories\RegisterRepository;
+use Modules\AuthManagement\DTOs\Register\RegisterData;
+use Modules\AuthManagement\Repositories\RegisterRepository;
 
 class RegisterAction
 {

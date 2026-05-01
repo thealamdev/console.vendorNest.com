@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\UserManagement\Http\Controllers;
+namespace Modules\AuthManagement\Http\Controllers;
 
 use App\Helpers\ApiResponse;
-use Modules\UserManagement\DTOs\Register\RegisterData;
-use Modules\UserManagement\Http\Requests\Auth\RegisterRequest;
-use Modules\UserManagement\Http\Resource\AuthResource;
-use Modules\UserManagement\Services\RegisterService;
+use Modules\AuthManagement\DTOs\Register\RegisterData;
+use Modules\AuthManagement\Http\Requests\RegisterRequest;
+use Modules\AuthManagement\Http\Resource\AuthResource;
+use Modules\AuthManagement\Services\RegisterService;
 
 class RegisterController
 {

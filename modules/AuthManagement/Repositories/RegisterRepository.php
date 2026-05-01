@@ -1,10 +1,10 @@
 <?php
 
-namespace Modules\UserManagement\Repositories;
+namespace Modules\AuthManagement\Repositories;
 
 use Illuminate\Support\Facades\Hash;
-use Modules\UserManagement\DTOs\Register\RegisterData;
-use Modules\UserManagement\Models\User;
+use Modules\AuthManagement\DTOs\Register\RegisterData;
+use Modules\AuthManagement\Models\User;
 
 class RegisterRepository
 {

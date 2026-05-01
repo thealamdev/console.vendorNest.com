@@ -1,9 +1,9 @@
 <?php
 
-namespace Modules\UserManagement\Services;
+namespace Modules\AuthManagement\Services;
 
-use Modules\UserManagement\Actions\RegisterAction;
-use Modules\UserManagement\DTOs\Register\RegisterData;
+use Modules\AuthManagement\Actions\RegisterAction;
+use Modules\AuthManagement\DTOs\Register\RegisterData;
 
 class RegisterService
 {

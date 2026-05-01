@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\UserManagement\DTOs\Register;
+namespace Modules\AuthManagement\DTOs\Register;
 
-use Modules\UserManagement\Http\Requests\Auth\RegisterRequest;
+use Modules\AuthManagement\Http\Requests\RegisterRequest;
 
 class RegisterData
 {

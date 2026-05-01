@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\UserManagement\Http\Requests\Auth;
+namespace Modules\AuthManagement\Http\Requests;
 
 use App\Http\Requests\BaseFormRequest;
 

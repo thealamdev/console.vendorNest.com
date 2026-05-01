@@ -3,9 +3,7 @@
 namespace Modules\UserManagement\Http\Requests\Organizer;
 
 use App\Http\Requests\BaseFormRequest;
-use Illuminate\Validation\Rule;
 use Modules\UserManagement\Enums\OrganizationType;
-use Modules\UserManagement\Models\User;
 
 class StoreOrganizerRequest extends BaseFormRequest
 {
