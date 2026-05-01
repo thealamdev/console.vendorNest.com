@@ -2,12 +2,12 @@
 
 namespace Modules\UserManagement\Http\Requests\Organizer;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\BaseFormRequest;
 use Illuminate\Validation\Rule;
 use Modules\UserManagement\Enums\OrganizationType;
 use Modules\UserManagement\Models\User;
 
-class StoreOrganizerRequest extends FormRequest
+class StoreOrganizerRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,9 @@ class StoreOrganizerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'owner_user_id'     => ['required', Rule::exists(User::class)],
+            'owner_user_id'     => 'required|exists:users,id',
             'type'              => 'required|in:' . implode(',', OrganizationType::values()),
             'name'              => 'required|string|max:30',
-            'slug'              => 'required|string|max:30',
             'email'             => 'required|unique:organizations,email',
             'phone'             => 'required|unique:organizations,phone',
             'address'           => 'nullable|string|max:50',
