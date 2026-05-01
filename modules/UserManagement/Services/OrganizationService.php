@@ -2,6 +2,7 @@
 
 namespace Modules\UserManagement\Services;
 
+use Modules\UserManagement\Actions\Organization\ListOrganizationAction;
 use Modules\UserManagement\Actions\Organization\StoreOrganizationAction;
 use Modules\UserManagement\DTOs\Organization\StoreOrganizationData;
 use Modules\UserManagement\Models\Organization;
@@ -9,8 +10,15 @@ use Modules\UserManagement\Models\Organization;
 class OrganizationService
 {
     public function __construct(
+        public ListOrganizationAction $listOrganizationAction,
         public StoreOrganizationAction $storeOrganizationAction
+
     ) {}
+
+    public function get()
+    {
+        return $this->listOrganizationAction->execute();
+    }
 
     /**
      * Execute the organization store action.

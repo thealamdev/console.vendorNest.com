@@ -6,13 +6,24 @@ use App\Helpers\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Modules\UserManagement\DTOs\Organization\StoreOrganizationData;
 use Modules\UserManagement\Http\Requests\Organizer\StoreOrganizerRequest;
+use Modules\UserManagement\Http\Resource\Organization\ListOrganizationResource;
 use Modules\UserManagement\Http\Resource\Organization\StoreOrganizationResource;
 use Modules\UserManagement\Services\OrganizationService;
 
 class OrganizerController
 {
-    public function get(){
-        dd('Get organizers');
+    /**
+     * Get organizer info
+     * @param OrganizationService $service
+     * @return never
+     */
+    public function get(OrganizationService $service):JsonResponse
+    {
+        $response = $service->get();
+        return ApiResponse::success(
+            data: new ListOrganizationResource($response),
+            message: 'Organization get successfully'
+        );
     }
 
     /**
