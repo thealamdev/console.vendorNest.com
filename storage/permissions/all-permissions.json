@@ -1,0 +1,57 @@
+{
+    "platform": ["platform.manage", "settings.update", "analytics.view"],
+    "user": ["user.view", "user.create", "user.update", "user.delete"],
+    "role": [
+        "role.view",
+        "role.create",
+        "role.update",
+        "role.delete",
+        "role.assign"
+    ],
+    "permission": ["permission.view"],
+    "organization": [
+        "organization.view",
+        "organization.create",
+        "organization.update",
+        "organization.delete",
+        "organization.switch"
+    ],
+    "member": [
+        "member.view",
+        "member.invite",
+        "member.update",
+        "member.remove"
+    ],
+    "vendor": [
+        "vendor.view",
+        "vendor.approve",
+        "vendor.reject",
+        "vendor.suspend"
+    ],
+    "product": [
+        "product.view",
+        "product.create",
+        "product.update",
+        "product.delete",
+        "product.approve",
+        "product.reject"
+    ],
+    "category": [
+        "category.view",
+        "category.create",
+        "category.update",
+        "category.delete"
+    ],
+    "order": [
+        "order.view",
+        "order.manage",
+        "order.update_status",
+        "order.cancel"
+    ],
+    "payment": ["payment.view", "payment.manage", "payment.refund"],
+    "transaction": ["transaction.view"],
+    "payout": ["payout.view", "payout.process"],
+    "report": ["report.view", "report.export"],
+    "notification": ["notification.view", "notification.send"],
+    "support": ["support.view", "support.reply", "support.close"]
+}
