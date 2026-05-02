@@ -23,14 +23,13 @@ class StoreOrganizerRequest extends BaseFormRequest
     public function rules(): array
     {
         return [
-            'owner_user_id'     => 'required|exists:users,id',
             'type'              => 'required|in:' . implode(',', OrganizationType::values()),
             'name'              => 'required|string|max:30',
             'email'             => 'required|unique:organizations,email',
             'phone'             => 'required|unique:organizations,phone',
             'address'           => 'nullable|string|max:50',
             'city'              => 'nullable|string|max:30',
-            'country'           => 'nullable"string|max:20',
+            'country'           => 'nullable|string|max:20',
         ];
     }
 }

@@ -3,9 +3,12 @@
 namespace Modules\UserManagement\Repositories;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Modules\UserManagement\DTOs\Organization\StoreOrganizationData;
+use Modules\UserManagement\Models\MemberRole;
 use Modules\UserManagement\Models\Organization;
+use Modules\UserManagement\Models\OrganizationMember;
 
 class OrganizationRepository
 {
@@ -30,13 +33,29 @@ class OrganizationRepository
      */
     public function store(StoreOrganizationData $data): Organization
     {
-        return Organization::create([
-            'owner_user_id' => $data->owner_user_id,
-            'type'          => $data->type,
-            'name'          => $data->name,
-            'slug'          => Str::slug($data->name) . '_' . uniqid(),
-            'email'         => $data->email,
-            'phone'         => $data->phone
-        ]);
+        return DB::transaction(function () use ($data) {
+            $organization = Organization::create([
+                'owner_user_id' => Auth::id(),
+                'type'          => $data->type,
+                'name'          => $data->name,
+                'slug'          => Str::slug($data->name) . '_' . uniqid(),
+                'email'         => $data->email,
+                'phone'         => $data->phone
+            ]);
+
+            $member = OrganizationMember::create([
+                'organization_id'   => $organization->id,
+                'user_id'           => Auth::id(),
+                'invited_by'        => Auth::id(),
+                'joined_at'         => now()
+            ]);
+
+            MemberRole::create([
+                'organization_member_id'    => $member->id,
+                'role_id'                   => vendorRoleId(),
+                'assigned_by'               => Auth::id()
+            ]);
+            return $organization;
+        });
     }
 }

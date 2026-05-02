@@ -30,3 +30,4 @@ DB::transaction(function () use ($user, $org) {
 2. Role Delete
 3. Permission creates
 4. Study how permission work
+5. Organizatin, Organization Member & Member role has been done
