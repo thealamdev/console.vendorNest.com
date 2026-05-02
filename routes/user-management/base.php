@@ -13,6 +13,7 @@ Route::prefix('organizer')->name('organizer.')->group(function () {
 
 Route::middleware('organization.context')->prefix('role')->name('role.')->group(function () {
     Route::controller(RoleController::class)->group(function () {
+        Route::get('/getAll', 'getAll')->name('getAll');
         Route::post('/store', 'store')->name('store');
     });
 });

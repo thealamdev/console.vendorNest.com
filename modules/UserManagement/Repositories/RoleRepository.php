@@ -2,25 +2,26 @@
 
 namespace Modules\UserManagement\Repositories;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Modules\UserManagement\DTOs\Role\StoreRoleData;
-use Modules\UserManagement\Models\Organization;
+use Illuminate\Support\Facades\Auth;
 use Modules\UserManagement\Models\Role;
+use Illuminate\Database\Eloquent\Collection;
+use Modules\UserManagement\DTOs\Role\StoreRoleData;
 
 class RoleRepository
 {
     /**
      * Get specific organizer info
-     * @return Organization|\stdClass|null
+     * @return Collection
      */
-    public function get()
+    public function getAll(): Collection
     {
-        return Organization::query()
-            ->select('id', 'name', 'email', 'type', 'owner_user_id')
-            ->where('owner_user_id', Auth::id())
-            ->with('owner:id,name,email')
-            ->first();
+        return Role::query()
+            ->select('id', 'organization_id', 'organization_type', 'slug', 'name', 'description', 'is_editable', 'created_by')
+            ->where('organization_id', activeOrganizationId())
+            ->with('organization:id,name,email')
+            ->with('createdBy:id,name,email')
+            ->get();
     }
 
 

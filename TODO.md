@@ -23,3 +23,10 @@ DB::transaction(function () use ($user, $org) {
     ]);
 });
 ```
+
+### 02 May, 2026
+
+1. Role update
+2. Role Delete
+3. Permission creates
+4. Study how permission work
