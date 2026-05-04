@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\UserManagement\Models\OrganizationMember;
 
-#[Fillable(['name', 'email', 'phone', 'password'])]
+#[Fillable(['name', 'email', 'phone', 'password','type'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {

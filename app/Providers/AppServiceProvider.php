@@ -22,9 +22,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Gate::define('canAccess', function (User $user) {
-        //     dd($user->type);
-        //     return $user->type !== UserType::BUYER->value;
-        // });
+        Gate::define('canAccess', function (User $user) {
+            return $user->type !== UserType::BUYER->value;
+        });
     }
 }
