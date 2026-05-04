@@ -18,3 +18,14 @@ if (!function_exists('vendorRoleId')) {
         return $role->id;
     }
 }
+
+if (!function_exists('currentMember')) {
+    function currentMember()
+    {
+        return request()->user()
+            ->memberships()
+            ->where('organization_id', activeOrganizationId())
+            // ->with(['memberships' => fn($q) => $q->where('organization_id', activeOrganizationId())])
+            ->first();
+    }
+}

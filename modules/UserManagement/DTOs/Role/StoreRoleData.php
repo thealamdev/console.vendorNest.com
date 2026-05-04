@@ -12,6 +12,7 @@ class StoreRoleData
         public string $name = '',
         public string $description = '',
         public bool $is_editable = true,
+        public ?array $permissions = []
     ) {}
 
     public static function make(StoreRoleRequest $request): self
@@ -22,6 +23,7 @@ class StoreRoleData
             name: $request->input('name'),
             description: $request->input('description'),
             is_editable: $request->input('is_editable'),
+            permissions: $request->input('permissions')
         );
     }
 }

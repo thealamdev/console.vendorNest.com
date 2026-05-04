@@ -2,7 +2,7 @@
 
 namespace Modules\UserManagement\DTOs\Organization;
 
-use Modules\UserManagement\Http\Requests\Organizer\StoreOrganizerRequest;
+use Modules\UserManagement\Http\Requests\Organization\StoreOrganizationRequest;
 
 class StoreOrganizationData
 {
@@ -16,7 +16,7 @@ class StoreOrganizationData
         public ?string $city = null,
     ) {}
 
-    public static function make(StoreOrganizerRequest $request): self
+    public static function make(StoreOrganizationRequest $request): self
     {
         return new self(
             type: $request->input('type'),

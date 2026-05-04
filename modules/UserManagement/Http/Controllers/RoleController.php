@@ -4,11 +4,12 @@ namespace Modules\UserManagement\Http\Controllers;
 
 use App\Helpers\ApiResponse;
 use Illuminate\Http\JsonResponse;
+use Modules\UserManagement\Services\RoleService;
 use Modules\UserManagement\DTOs\Role\StoreRoleData;
 use Modules\UserManagement\Http\Requests\Role\StoreRoleRequest;
 use Modules\UserManagement\Http\Resource\Role\ListRoleResource;
 use Modules\UserManagement\Http\Resource\Role\StoreRoleResource;
-use Modules\UserManagement\Services\RoleService;
+use Modules\UserManagement\Repositories\RolePermissionService;
 
 class RoleController
 {
@@ -21,12 +22,12 @@ class RoleController
         );
     }
 
-
-    public function store(StoreRoleRequest $request, RoleService $service): JsonResponse
+    public function store(StoreRoleRequest $request, RolePermissionService $service): JsonResponse
     {
         try {
             $data = StoreRoleData::make($request);
-            $response = $service->store($data);
+            $response = $service->createRoleWithPermissions($data);
+
             return ApiResponse::success(
                 data: new StoreRoleResource($response),
                 message: 'Role created succssfully'

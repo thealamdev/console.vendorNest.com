@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\UserManagement\Http\Requests\Organizer;
+namespace Modules\UserManagement\Http\Requests\Organization;
 
 use App\Http\Requests\BaseFormRequest;
 use Modules\UserManagement\Enums\OrganizationType;
 
-class StoreOrganizerRequest extends BaseFormRequest
+class StoreOrganizationRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

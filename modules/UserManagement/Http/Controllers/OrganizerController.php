@@ -4,8 +4,9 @@ namespace Modules\UserManagement\Http\Controllers;
 
 use App\Helpers\ApiResponse;
 use Illuminate\Http\JsonResponse;
+use Modules\AuthManagement\Models\User;
 use Modules\UserManagement\DTOs\Organization\StoreOrganizationData;
-use Modules\UserManagement\Http\Requests\Organizer\StoreOrganizerRequest;
+use Modules\UserManagement\Http\Requests\Organization\StoreOrganizationRequest;
 use Modules\UserManagement\Http\Resource\Organization\ListOrganizationResource;
 use Modules\UserManagement\Http\Resource\Organization\StoreOrganizationResource;
 use Modules\UserManagement\Services\OrganizationService;
@@ -17,7 +18,7 @@ class OrganizerController
      * @param OrganizationService $service
      * @return never
      */
-    public function get(OrganizationService $service):JsonResponse
+    public function get(OrganizationService $service, User $user): JsonResponse
     {
         $response = $service->get();
         return ApiResponse::success(
@@ -28,11 +29,11 @@ class OrganizerController
 
     /**
      * Store Organization data
-     * @param StoreOrganizerRequest $request
+     * @param StoreOrganizationRequest $request
      * @param OrganizationService $service
      * @return never
      */
-    public function store(StoreOrganizerRequest $request, OrganizationService $service): JsonResponse
+    public function store(StoreOrganizationRequest $request, OrganizationService $service): JsonResponse
     {
         try {
             $data = StoreOrganizationData::make($request);
