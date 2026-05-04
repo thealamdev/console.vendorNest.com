@@ -33,6 +33,7 @@ class OrganizationMemberRepository
                 'role_id'                   => $data->role_id,
                 'assigned_by'               => Auth::id()
             ]);
+
             return $member;
         });
     }

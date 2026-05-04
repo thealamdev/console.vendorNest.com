@@ -39,4 +39,9 @@ class RoleController
             );
         }
     }
+
+    public function update()
+    {
+        dd('Permission');
+    }
 }

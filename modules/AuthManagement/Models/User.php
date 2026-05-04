@@ -11,7 +11,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
-use Modules\UserManagement\Models\Organization;
 use Modules\UserManagement\Models\OrganizationMember;
 
 #[Fillable(['name', 'email', 'phone', 'password'])]
