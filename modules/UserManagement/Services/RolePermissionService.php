@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\UserManagement\Repositories;
+namespace Modules\UserManagement\Services;
 
 use Illuminate\Support\Facades\DB;
 use Modules\UserManagement\DTOs\Role\StoreRoleData;

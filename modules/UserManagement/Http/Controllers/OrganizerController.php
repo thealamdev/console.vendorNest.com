@@ -7,8 +7,8 @@ use Illuminate\Http\JsonResponse;
 use Modules\AuthManagement\Models\User;
 use Modules\UserManagement\DTOs\Organization\StoreOrganizationData;
 use Modules\UserManagement\Http\Requests\Organization\StoreOrganizationRequest;
-use Modules\UserManagement\Http\Resource\Organization\ListOrganizationResource;
-use Modules\UserManagement\Http\Resource\Organization\StoreOrganizationResource;
+use Modules\UserManagement\Http\Resources\Organization\StoreOrganizationResource;
+use Modules\UserManagement\Http\Resources\Organization\ListOrganizationResource;
 use Modules\UserManagement\Services\OrganizationService;
 
 class OrganizerController

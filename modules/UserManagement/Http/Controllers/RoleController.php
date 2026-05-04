@@ -7,9 +7,9 @@ use Illuminate\Http\JsonResponse;
 use Modules\UserManagement\Services\RoleService;
 use Modules\UserManagement\DTOs\Role\StoreRoleData;
 use Modules\UserManagement\Http\Requests\Role\StoreRoleRequest;
-use Modules\UserManagement\Http\Resource\Role\ListRoleResource;
-use Modules\UserManagement\Http\Resource\Role\StoreRoleResource;
-use Modules\UserManagement\Repositories\RolePermissionService;
+use Modules\UserManagement\Http\Resources\Role\ListRoleResource;
+use Modules\UserManagement\Http\Resources\Role\StoreRoleResource;
+use Modules\UserManagement\Services\RolePermissionService;
 
 class RoleController
 {

@@ -5,7 +5,7 @@ namespace Modules\AuthManagement\Http\Controllers;
 use App\Helpers\ApiResponse;
 use Modules\AuthManagement\DTOs\Register\RegisterData;
 use Modules\AuthManagement\Http\Requests\RegisterRequest;
-use Modules\AuthManagement\Http\Resource\AuthResource;
+use Modules\AuthManagement\Http\Resources\AuthResource;
 use Modules\AuthManagement\Services\RegisterService;
 
 class RegisterController
