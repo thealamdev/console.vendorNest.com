@@ -2,7 +2,9 @@
 
 namespace Modules\UserManagement\Models;
 
+use App\Policies\RolePolicy;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Modules\AuthManagement\Models\User;
 
 #[Fillable((['organization_id', 'organization_type', 'slug', 'name', 'description', 'is_editable', 'created_by']))]
+#[UsePolicy(RolePolicy::class)]
 
 class Role extends Model
 {

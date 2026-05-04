@@ -2,10 +2,9 @@
 
 namespace Modules\UserManagement\DTOs\Role;
 
-use Modules\UserManagement\Http\Requests\RolePermission\StoreRolePermissionRequest;
+use Modules\UserManagement\Http\Requests\RolePermission\UpdateRolePermissionRequest;
 
-
-class StoreRoleData
+class UpdateRoleData
 {
     public function __construct(
         public ?string $organization_id = '',
@@ -15,7 +14,7 @@ class StoreRoleData
         public bool $is_editable = true,
     ) {}
 
-    public static function make(StoreRolePermissionRequest $request): self
+    public static function make(UpdateRolePermissionRequest $request): self
     {
         return new self(
             organization_id: activeOrganizationId(),

@@ -1,12 +1,12 @@
 <?php
 
-namespace Modules\UserManagement\Http\Requests\Role;
+namespace Modules\UserManagement\Http\Requests\RolePermission;
 
 use App\Http\Requests\BaseFormRequest;
 use Illuminate\Validation\Rule;
 use Modules\UserManagement\Enums\OrganizationType;
 
-class StoreRoleRequest extends BaseFormRequest
+class UpdateRolePermissionRequest extends BaseFormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,10 +29,13 @@ class StoreRoleRequest extends BaseFormRequest
                 'required',
                 'string',
                 'max:30',
-                Rule::unique('roles', 'name')->where(fn($query) => $query->where('organization_id', activeOrganizationId())),
+                Rule::unique('roles', 'name')
+                    ->ignore($this->route('role'))
+                    ->where(fn($query) => $query->where('organization_id', activeOrganizationId())),
             ],
             'description'       => 'nullable|string|max:255',
             'is_editable'       => 'nullable',
+            'permissions'       => 'nullable|array'
         ];
     }
 }

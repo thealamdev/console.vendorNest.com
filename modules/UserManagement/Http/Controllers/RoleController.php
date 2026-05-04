@@ -4,17 +4,24 @@ namespace Modules\UserManagement\Http\Controllers;
 
 use App\Helpers\ApiResponse;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Gate;
+use Modules\UserManagement\DTOs\Permission\StorePermissionData;
+use Modules\UserManagement\DTOs\Permission\UpdatePermissionData;
+use Modules\UserManagement\Http\Requests\RolePermission\StoreRolePermissionRequest;
 use Modules\UserManagement\Services\RoleService;
 use Modules\UserManagement\DTOs\Role\StoreRoleData;
-use Modules\UserManagement\Http\Requests\Role\StoreRoleRequest;
+use Modules\UserManagement\DTOs\Role\UpdateRoleData;
+use Modules\UserManagement\Http\Requests\RolePermission\UpdateRolePermissionRequest;
 use Modules\UserManagement\Http\Resources\Role\ListRoleResource;
 use Modules\UserManagement\Http\Resources\Role\StoreRoleResource;
+use Modules\UserManagement\Models\Role;
 use Modules\UserManagement\Services\RolePermissionService;
 
 class RoleController
 {
     public function getAll(RoleService $service)
     {
+        Gate::authorize('getAll', Role::class);
         $response = $service->getAll();
         return ApiResponse::success(
             data: ListRoleResource::collection($response),
@@ -22,11 +29,13 @@ class RoleController
         );
     }
 
-    public function store(StoreRoleRequest $request, RolePermissionService $service): JsonResponse
+    public function store(StoreRolePermissionRequest $request, RolePermissionService $service): JsonResponse
     {
+        Gate::authorize('store', Role::class);
         try {
-            $data = StoreRoleData::make($request);
-            $response = $service->createRoleWithPermissions($data);
+            $role = StoreRoleData::make($request);
+            $permissions = StorePermissionData::make($request);
+            $response = $service->createRoleWithPermissions($role, $permissions);
 
             return ApiResponse::success(
                 data: new StoreRoleResource($response),
@@ -40,8 +49,14 @@ class RoleController
         }
     }
 
-    public function update()
+    public function update(Role $role, UpdateRolePermissionRequest $request, RolePermissionService $service)
     {
-        dd('Permission');
+        $updateRoleData = UpdateRoleData::make($request);
+        $updatePermissionData = UpdatePermissionData::make(($request));
+        
+        $response = $service->updateRoleWithPermissions($role, $updateRoleData, $updatePermissionData);
+
+
+        dd($response);
     }
 }

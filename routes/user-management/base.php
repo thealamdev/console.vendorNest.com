@@ -17,7 +17,7 @@ Route::middleware('organization.context')->group(function () {
         Route::controller(RoleController::class)->group(function () {
             Route::get('/getAll', 'getAll')->name('getAll');
             Route::post('/store', 'store')->name('store');
-            Route::put('/update', 'update')->name('update');
+            Route::put('/update/{role}', 'update')->name('update');
         });
     });
 
