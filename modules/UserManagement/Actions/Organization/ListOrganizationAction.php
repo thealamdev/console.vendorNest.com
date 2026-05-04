@@ -15,7 +15,7 @@ class ListOrganizationAction
      * Execute get organizer repo
      * @return Organization|\stdClass|null
      */
-    public function execute(): Organization
+    public function execute(): Organization|\stdClass|null
     {
         return $this->repo->get();
     }

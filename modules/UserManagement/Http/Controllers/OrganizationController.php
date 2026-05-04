@@ -4,21 +4,20 @@ namespace Modules\UserManagement\Http\Controllers;
 
 use App\Helpers\ApiResponse;
 use Illuminate\Http\JsonResponse;
-use Modules\AuthManagement\Models\User;
 use Modules\UserManagement\DTOs\Organization\StoreOrganizationData;
 use Modules\UserManagement\Http\Requests\Organization\StoreOrganizationRequest;
 use Modules\UserManagement\Http\Resources\Organization\StoreOrganizationResource;
 use Modules\UserManagement\Http\Resources\Organization\ListOrganizationResource;
 use Modules\UserManagement\Services\OrganizationService;
 
-class OrganizerController
+class OrganizationController
 {
     /**
      * Get organizer info
      * @param OrganizationService $service
      * @return never
      */
-    public function get(OrganizationService $service, User $user): JsonResponse
+    public function get(OrganizationService $service): JsonResponse
     {
         $response = $service->get();
         return ApiResponse::success(

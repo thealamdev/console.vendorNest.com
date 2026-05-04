@@ -24,7 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($request->is('api/*') || $request->expectsJson()) {
                 return ApiResponse::error(
                     message: $e->getMessage(),
-                    code: 405,
+                    code: 403,
                     errors: ['ability' => $e->getMessage()]
                 );
             }

@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
+use Modules\AuthManagement\Models\User;
+use Modules\UserManagement\Enums\UserType;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Gate::define('canAccess', function (User $user) {
+        //     dd($user->type);
+        //     return $user->type !== UserType::BUYER->value;
+        // });
     }
 }

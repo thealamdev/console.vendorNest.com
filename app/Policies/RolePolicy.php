@@ -13,7 +13,7 @@ class RolePolicy
      */
     public function getAll(User $user): bool
     {
-        return true;
+        return $user->hasPermission('role.view', activeOrganizationId());
     }
 
     /**
@@ -37,7 +37,9 @@ class RolePolicy
      */
     public function update(User $user, Role $role): bool
     {
-        return false;
+        $match = activeOrganizationId() === $role->organization_id;
+        $permission = $user->hasPermission('role.create', activeOrganizationId());
+        return  $match && $permission;
     }
 
     /**

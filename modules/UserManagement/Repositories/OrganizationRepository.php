@@ -16,13 +16,15 @@ class OrganizationRepository
      * Get specific organizer info
      * @return Organization|\stdClass|null
      */
-    public function get()
+    public function get(): Organization|\stdClass|null
     {
-        return Organization::query()
+        $data = Organization::query()
             ->select('id', 'name', 'email', 'type', 'owner_user_id')
             ->where('owner_user_id', Auth::id())
             ->with('owner:id,name,email')
             ->first();
+
+        return $data ?? null;
     }
 
 

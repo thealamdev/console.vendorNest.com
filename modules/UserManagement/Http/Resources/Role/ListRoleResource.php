@@ -28,21 +28,21 @@ class ListRoleResource extends JsonResource
         ];
     }
 
-    public function Creator(User $data): array
+    public function Creator(?User $data): array
     {
         return [
-            'id'    => $data->id,
-            'name'  => $data->name,
-            'email' => $data->email
+            'id'    => $data?->id,
+            'name'  => $data?->name,
+            'email' => $data?->email
         ];
     }
 
     public function Organization(?Organization $data): array
     {
         return [
-            'id'    => $data->id,
-            'name'  => $data->name,
-            'email' => $data->email
+            'id'    => $data?->id,
+            'name'  => $data?->name,
+            'email' => $data?->email
         ];
     }
 }

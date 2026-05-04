@@ -51,12 +51,22 @@ class RoleController
 
     public function update(Role $role, UpdateRolePermissionRequest $request, RolePermissionService $service)
     {
-        $updateRoleData = UpdateRoleData::make($request);
-        $updatePermissionData = UpdatePermissionData::make(($request));
-        
-        $response = $service->updateRoleWithPermissions($role, $updateRoleData, $updatePermissionData);
+        Gate::authorize('update', $role);
+        try {
+            $updateRoleData = UpdateRoleData::make($request);
+            $updatePermissionData = UpdatePermissionData::make(($request));
 
+            $response = $service->updateRoleWithPermissions($role, $updateRoleData, $updatePermissionData);
 
-        dd($response);
+            return ApiResponse::success(
+                data: new StoreRoleResource($response),
+                message: 'Role created succssfully'
+            );
+        } catch (\Exception $e) {
+            return ApiResponse::error(
+                message: $e->getMessage(),
+                errors: $e
+            );
+        }
     }
 }
