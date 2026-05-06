@@ -17,6 +17,7 @@ class RegisterAction
         $token = $user->createToken('auth_token')->plainTextToken;
         return [
             'user' => $user,
+            'memberships'   => $user,
             'token' => $token,
         ];
     }

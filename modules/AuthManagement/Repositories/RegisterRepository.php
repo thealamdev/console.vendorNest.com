@@ -9,14 +9,21 @@ use Modules\UserManagement\Enums\UserType;
 
 class RegisterRepository
 {
-    public function register(RegisterData $data)
+    public function register(RegisterData $data): User
     {
-        return User::create([
+        $user = User::create([
             'name'      => $data->name,
             'email'     => $data->email,
             'phone'     => $data->phone,
             'password'  => Hash::make($data->password),
             'type'      => UserType::VENDOR->value
         ]);
+
+        $data = $user->load([
+            'memberships:id,organization_id,user_id',
+            'memberships.organization:id,owner_user_id,name,email',
+        ]);
+        
+        return $data;
     }
 }

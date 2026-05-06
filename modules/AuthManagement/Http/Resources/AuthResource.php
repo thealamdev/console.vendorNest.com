@@ -16,6 +16,7 @@ class AuthResource extends JsonResource
     {
         return [
             'user' => $this->userInfo(),
+            'memberships'  => $this->memberships(),
             'token' => $this->resource['token'],
         ];
     }
@@ -32,5 +33,14 @@ class AuthResource extends JsonResource
             'email' => $this->resource['user']->email,
             'phone' => $this->resource['user']->phone,
         ];
+    }
+
+    public function memberships()
+    {
+        return $this->resource['memberships']->map(fn($item) => [
+            'org_id'    => $item->organization->id,
+            'org_name'  => $item->organization->name,
+            'org_email'  => $item->organization->email,
+        ]);
     }
 }

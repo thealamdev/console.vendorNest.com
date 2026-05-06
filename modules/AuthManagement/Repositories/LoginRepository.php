@@ -17,6 +17,10 @@ class LoginRepository
     public function login(LoginData $data): array
     {
         $user = User::query()
+            ->with([
+                'memberships:id,organization_id,user_id',
+                'memberships.organization:id,owner_user_id,name,email',
+            ])
             ->where('email', $data->email)
             ->first();
 
@@ -28,9 +32,12 @@ class LoginRepository
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return [
+        $data = [
             'user' => $user,
+            'memberships'  => $user->memberships,
             'token' => $token,
         ];
+
+        return $data;
     }
 }
