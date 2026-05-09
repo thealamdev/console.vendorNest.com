@@ -2,7 +2,7 @@
 
 namespace Modules\UserManagement\Http\Controllers;
 
-use App\Helpers\ApiResponse;
+use App\Support\Helpers\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Modules\UserManagement\DTOs\Organization\StoreOrganizationData;
 use Modules\UserManagement\Http\Requests\Organization\StoreOrganizationRequest;

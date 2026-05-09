@@ -17,7 +17,7 @@ class ListOrganizationResource extends JsonResource
         if (!$this->resource) {
             return [];
         }
-        
+
         return [
             'id'    => $this->resource['id'],
             'name'  => $this->resource['name'],

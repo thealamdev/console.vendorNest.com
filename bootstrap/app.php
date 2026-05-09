@@ -1,6 +1,6 @@
 <?php
 
-use App\Helpers\ApiResponse;
+use App\Support\Helpers\ApiResponse;
 use App\Http\Middleware\OrganizationContext;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;

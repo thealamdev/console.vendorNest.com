@@ -2,7 +2,7 @@
 
 namespace Modules\AuthManagement\Http\Controllers;
 
-use App\Helpers\ApiResponse;
+use App\Support\Helpers\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Modules\AuthManagement\DTOs\Login\LoginData;
 use Modules\AuthManagement\Http\Requests\LoginRequest;

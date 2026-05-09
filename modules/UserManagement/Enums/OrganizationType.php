@@ -2,7 +2,7 @@
 
 namespace Modules\UserManagement\Enums;
 
-use App\Traits\HasEnumsCollection;
+use App\Support\Traits\HasEnumsCollection;
 
 enum OrganizationType: string
 {

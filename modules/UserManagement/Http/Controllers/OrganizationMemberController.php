@@ -2,7 +2,7 @@
 
 namespace Modules\UserManagement\Http\Controllers;
 
-use App\Helpers\ApiResponse;
+use App\Support\Helpers\ApiResponse;
 use Illuminate\Support\Facades\Gate;
 use Modules\UserManagement\Http\Resources\Organization\StoreOrganizationResource;
 use Modules\UserManagement\Models\OrganizationMember;

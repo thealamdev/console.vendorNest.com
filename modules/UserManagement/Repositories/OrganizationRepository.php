@@ -2,27 +2,36 @@
 
 namespace Modules\UserManagement\Repositories;
 
+use App\Support\Cache\OrganizationCache;
+use App\Support\Traits\HasCache;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Modules\UserManagement\DTOs\Organization\StoreOrganizationData;
+use Modules\UserManagement\Interfaces\OrganizationRepositoryInterface;
 use Modules\UserManagement\Models\MemberRole;
 use Modules\UserManagement\Models\Organization;
 use Modules\UserManagement\Models\OrganizationMember;
 
-class OrganizationRepository
+class OrganizationRepository implements OrganizationRepositoryInterface
 {
+    use HasCache;
     /**
      * Get specific organizer info
-     * @return Organization|\stdClass|null
+     * @return array|null
      */
-    public function get(): Organization|\stdClass|null
+    public function get(): array|null
     {
-        $data = Organization::query()
-            ->select('id', 'name', 'email', 'type', 'owner_user_id')
-            ->where('owner_user_id', Auth::id())
-            ->with('owner:id,name,email')
-            ->first();
+        $data = $this->rememberCache(
+            key: OrganizationCache::GET_CACHE_KEY . Auth::id(),
+            tags: OrganizationCache::TAGS,
+            callback: fn() => Organization::query()
+                ->select('id', 'name', 'email', 'phone', 'type', 'owner_user_id')
+                ->where('owner_user_id', Auth::id())
+                ->with('owner:id,name,email')
+                ->first()
+                ?->toArray()
+        );
 
         return $data ?? null;
     }

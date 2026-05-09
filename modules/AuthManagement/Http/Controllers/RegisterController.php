@@ -2,7 +2,7 @@
 
 namespace Modules\AuthManagement\Http\Controllers;
 
-use App\Helpers\ApiResponse;
+use App\Support\Helpers\ApiResponse;
 use Modules\AuthManagement\DTOs\Register\RegisterData;
 use Modules\AuthManagement\Http\Requests\RegisterRequest;
 use Modules\AuthManagement\Http\Resources\AuthResource;

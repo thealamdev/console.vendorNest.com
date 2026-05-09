@@ -2,7 +2,6 @@
 
 namespace Modules\UserManagement\Actions\Organization;
 
-use Modules\UserManagement\Models\Organization;
 use Modules\UserManagement\Repositories\OrganizationRepository;
 
 class ListOrganizationAction
@@ -13,9 +12,9 @@ class ListOrganizationAction
 
     /**
      * Execute get organizer repo
-     * @return Organization|\stdClass|null
+     * @return array|null
      */
-    public function execute(): Organization|\stdClass|null
+    public function execute(): array|null
     {
         return $this->repo->get();
     }

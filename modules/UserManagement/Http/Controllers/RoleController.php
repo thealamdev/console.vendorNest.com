@@ -2,7 +2,7 @@
 
 namespace Modules\UserManagement\Http\Controllers;
 
-use App\Helpers\ApiResponse;
+use App\Support\Helpers\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;
 use Modules\UserManagement\DTOs\Permission\StorePermissionData;
