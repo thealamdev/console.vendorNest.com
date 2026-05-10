@@ -12,15 +12,12 @@ class LoginRepository
     /**
      * Handle the login logic.
      * @param LoginData $data
-     * @return array{token: string, user: User}
+     * @return array{token: string, hasMembership:bool, user: User}
      */
     public function login(LoginData $data): array
     {
         $user = User::query()
-            ->with([
-                'memberships:id,organization_id,user_id',
-                'memberships.organization:id,owner_user_id,name,email',
-            ])
+            ->withCount('memberships')
             ->where('email', $data->email)
             ->first();
 
@@ -34,7 +31,7 @@ class LoginRepository
 
         $data = [
             'user' => $user,
-            'memberships'  => $user->memberships,
+            'hasMembership'  => $user->memberships_count > 0 ? true : false,
             'token' => $token,
         ];
 
