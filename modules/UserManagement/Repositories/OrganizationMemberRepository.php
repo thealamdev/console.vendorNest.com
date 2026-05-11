@@ -2,15 +2,33 @@
 
 namespace Modules\UserManagement\Repositories;
 
+use App\Support\Traits\HasCache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Services\UserResolverService;
+use App\Support\Cache\OrganizationMemberCache;
 use Modules\UserManagement\Models\MemberRole;
 use Modules\UserManagement\Models\OrganizationMember;
 use Modules\UserManagement\DTOs\OrganizationMember\StoreOrganizationMemberData;
 
 class OrganizationMemberRepository
 {
+    use HasCache;
+    public function getAll(): array
+    {
+        $data = $this->rememberCache(
+            key: OrganizationMemberCache::GET_CACHE_KEY,
+            tags: OrganizationMemberCache::TAGS,
+            callback: fn() => OrganizationMember::where('user_id', Auth::id())
+                ->where('status', true)
+                ->select('id', 'organization_id')
+                ->with('organization:id,type,name,email,phone')
+                ->get()?->toArray()
+        );
+
+        return $data;
+    }
+
     /**
      * Store the data to database
      * @param StoreOrganizationMemberData $data

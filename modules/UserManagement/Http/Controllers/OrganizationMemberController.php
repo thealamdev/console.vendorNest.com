@@ -8,10 +8,20 @@ use Modules\UserManagement\Http\Resources\Organization\StoreOrganizationResource
 use Modules\UserManagement\Models\OrganizationMember;
 use Modules\UserManagement\DTOs\OrganizationMember\StoreOrganizationMemberData;
 use Modules\UserManagement\Http\Requests\OrganizationMember\StoreOrganizationMemberRequest;
+use Modules\UserManagement\Http\Resources\OrganizationMember\ListOrganizationMembershipResource;
 use Modules\UserManagement\Services\OrganizationMemberService;
 
 class OrganizationMemberController
 {
+    public function getAll(OrganizationMemberService $service)
+    {
+        $response = $service->getAll();
+        return ApiResponse::success(
+            data: ListOrganizationMembershipResource::collection($response),
+            message: 'Organization member get successfully'
+        );
+    }
+
     public function store(StoreOrganizationMemberRequest $request, OrganizationMemberService $service)
     {
         Gate::authorize('store', OrganizationMember::class);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\OrganizationContext;
 use Illuminate\Support\Facades\Route;
 use Modules\UserManagement\Http\Controllers\OrganizationController;
 use Modules\UserManagement\Http\Controllers\OrganizationMemberController;
@@ -23,6 +24,7 @@ Route::middleware('organization.context')->group(function () {
 
     Route::prefix('member')->name('member.')->group(function () {
         Route::controller(OrganizationMemberController::class)->group(function () {
+            Route::get('/getAll', 'getAll')->name('getAll')->withoutMiddleware(OrganizationContext::class);
             Route::post('/store', 'store')->name('store');
         });
     });
