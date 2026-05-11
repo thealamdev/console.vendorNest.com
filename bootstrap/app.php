@@ -5,6 +5,7 @@ use App\Http\Middleware\OrganizationContext;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Middleware\HandleCors;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -15,8 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->append(HandleCors::class);
         $middleware->alias([
-            'organization.context' => OrganizationContext::class
+            'organization.context' => OrganizationContext::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
