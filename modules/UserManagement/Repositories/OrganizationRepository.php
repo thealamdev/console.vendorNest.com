@@ -8,10 +8,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Modules\UserManagement\DTOs\Organization\StoreOrganizationData;
+use Modules\UserManagement\Enums\OrganizationType;
 use Modules\UserManagement\Interfaces\OrganizationRepositoryInterface;
 use Modules\UserManagement\Models\MemberRole;
 use Modules\UserManagement\Models\Organization;
 use Modules\UserManagement\Models\OrganizationMember;
+use Modules\UserManagement\Models\Role;
+use Modules\UserManagement\Enums\Role as EnumsRole;
+use Modules\UserManagement\Models\Permission;
 
 class OrganizationRepository implements OrganizationRepositoryInterface
 {
@@ -36,7 +40,6 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         return $data ?? null;
     }
 
-
     /**
      * Store the data to database
      * @param StoreOrganizationData $data
@@ -54,6 +57,24 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 'phone'         => $data->phone
             ]);
 
+
+            $vendorOwnerRole = Role::firstOrCreate([
+                'name' => EnumsRole::VENDOR_OWNER->value,
+                'organization_id' => $organization->id,
+            ], [
+                'organization_type' => OrganizationType::VENDOR->value,
+                'slug'              => Str::slug(EnumsRole::VENDOR_OWNER->value),
+                'description'       => 'This is Vendor Owner role',
+                'is_system_role'    => false,
+                'is_editable'       => false,
+                'created_by'        => Auth::id()
+            ]);
+
+
+
+            $vendorPermissions = Permission::whereNotIn('module', ['platform', 'user', 'vendor', 'payout'])->pluck('id');
+            $vendorOwnerRole->permissions()->sync($vendorPermissions);
+
             $member = OrganizationMember::create([
                 'organization_id'   => $organization->id,
                 'user_id'           => Auth::id(),
@@ -63,9 +84,10 @@ class OrganizationRepository implements OrganizationRepositoryInterface
 
             MemberRole::create([
                 'organization_member_id'    => $member->id,
-                'role_id'                   => vendorRoleId(),
+                'role_id'                   => $vendorOwnerRole->id,
                 'assigned_by'               => Auth::id()
             ]);
+
             return $organization;
         });
     }

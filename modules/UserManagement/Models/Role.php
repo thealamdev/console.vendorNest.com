@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\AuthManagement\Models\User;
 
 #[Fillable((['organization_id', 'organization_type', 'slug', 'name', 'description', 'is_editable', 'created_by']))]
@@ -28,6 +29,11 @@ class Role extends Model
         return $this->belongsTo(Organization::class, 'organization_id');
     }
 
+    public function member():HasOne
+    {
+        return $this->hasOne(MemberRole::class, 'role_id');
+    }
+
     /**
      * Make relation with User
      * @return BelongsTo<User, Role>
@@ -37,7 +43,7 @@ class Role extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function permissions():BelongsToMany
+    public function permissions(): BelongsToMany
     {
         return $this->belongsToMany(Permission::class, 'role_permissions');
     }

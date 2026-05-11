@@ -64,23 +64,9 @@ class BootstrapPlatformSeeder extends Seeder
                 'created_by'        => $user->id
             ]);
 
-            $vendorOwnerRole = Role::firstOrCreate([
-                'name' => EnumsRole::VENDOR_OWNER->value,
-                'organization_id' => $organization->id,
-            ], [
-                'organization_type' => OrganizationType::VENDOR->value,
-                'slug'              => Str::slug(EnumsRole::VENDOR_OWNER->value),
-                'description'       => 'This is Vendor Owner role',
-                'is_system_role'    => true,
-                'is_editable'       => false,
-                'created_by'        => $user->id
-            ]);
-
             $allPermissions = Permission::pluck('id');
-            $vendorPermissions = Permission::whereNotIn('module', ['platform', 'user', 'vendor', 'payout'])->pluck('id');
 
             $superAdminRole->permissions()->sync($allPermissions);
-            $vendorOwnerRole->permissions()->sync($vendorPermissions);
 
             $member = OrganizationMember::create([
                 'organization_id'   => $organization->id,
