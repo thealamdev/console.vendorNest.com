@@ -19,7 +19,7 @@ class ListOrganizationMembershipResource extends JsonResource
         }
 
         return [
-            'org_id'    => $this->resource['id'] ?? null,
+            'org_id'    => $this->resource['organization']['id'] ?? null,
             'name'      => $this->resource['organization']['name'] ?? null,
             'email'     => $this->resource['organization']['email'] ?? null,
             'phone'     => $this->resource['organization']['phone'] ?? null,
