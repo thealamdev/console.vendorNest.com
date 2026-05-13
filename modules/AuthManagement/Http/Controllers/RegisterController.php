@@ -21,6 +21,7 @@ class RegisterController
             );
         } catch (\Exception $e) {
             return ApiResponse::error(
+                code: $e->getCode(),
                 message: $e->getMessage(),
                 errors: $e
             );
