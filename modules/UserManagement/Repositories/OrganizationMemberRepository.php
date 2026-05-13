@@ -17,7 +17,7 @@ class OrganizationMemberRepository
     public function getAll(): array
     {
         $data = $this->rememberCache(
-            key: OrganizationMemberCache::GET_CACHE_KEY,
+            key: OrganizationMemberCache::GET_CACHE_KEY . Auth::id(),
             tags: OrganizationMemberCache::TAGS,
             callback: fn() => OrganizationMember::where('user_id', Auth::id())
                 ->where('status', true)
@@ -25,8 +25,6 @@ class OrganizationMemberRepository
                 ->with('organization:id,type,name,email,phone')
                 ->get()?->toArray()
         );
-
-        // dd($data);
 
         return $data;
     }

@@ -1,5 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\UserManagement\Http\LoginController;
 
+Route::get('/', function () {
+    return view('welcome');
+});
