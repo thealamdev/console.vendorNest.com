@@ -27,6 +27,11 @@ class OrganizationMember extends Model
         return $this->belongsTo(Organization::class, 'organization_id');
     }
 
+    public function isOwner()
+    {
+        return $this->belongsTo(Organization::class, 'user_id','owner_user_id');
+    }
+
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'member_roles');
