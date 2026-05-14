@@ -20,6 +20,7 @@ class ListOrganizationMembershipResource extends JsonResource
 
         return [
             'org_id'    => $this->resource['organization']['id'] ?? null,
+            'isOwner'   => $this->resource['user_id'] === $this->resource['organization']['owner_user_id'] ? 'Owner' : 'Staff',
             'name'      => $this->resource['organization']['name'] ?? null,
             'email'     => $this->resource['organization']['email'] ?? null,
             'phone'     => $this->resource['organization']['phone'] ?? null,

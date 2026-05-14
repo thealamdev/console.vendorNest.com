@@ -21,8 +21,11 @@ class OrganizationMemberRepository
             tags: OrganizationMemberCache::TAGS,
             callback: fn() => OrganizationMember::where('user_id', Auth::id())
                 ->where('status', true)
-                ->select('id', 'organization_id')
-                ->with('organization:id,type,name,email,phone')
+                ->select('id', 'user_id', 'organization_id')
+                ->with([
+                    'organization:id,owner_user_id,type,name,email,phone',
+                ])
+
                 ->get()?->toArray()
         );
 

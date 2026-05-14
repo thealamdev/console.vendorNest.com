@@ -15,6 +15,7 @@ class StoreOrganizationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id'    => $this->resource['id'],
             'type'  => $this->resource['type'],
             'name'  => $this->resource['name'],
             'email' => $this->resource['email'],
