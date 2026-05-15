@@ -13,7 +13,7 @@ use Modules\UserManagement\DTOs\OrganizationMember\StoreOrganizationMemberData;
 
 class OrganizationMemberRepository
 {
-    public function roles():array
+    public function roles(): array
     {
         $data = OrganizationMember::query()
             ->where('organization_id', activeOrganizationId())
@@ -35,7 +35,7 @@ class OrganizationMemberRepository
                 ->with('user:id,name,email,type')
                 ->with('invitedBy:id,name,email,type')
                 ->get()
-                ->toArray()
+                ?->toArray()
         );
 
         return $data;

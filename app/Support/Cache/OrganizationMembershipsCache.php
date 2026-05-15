@@ -8,7 +8,7 @@ class OrganizationMembershipsCache extends BaseCache
 {
     public static function key(): string
     {
-        return 'organization_memberships.all'. Auth::id();
+        return 'organization_memberships.all' . Auth::id() . activeOrganizationId();
     }
 
     public static function tags(): array

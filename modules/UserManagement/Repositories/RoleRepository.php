@@ -8,6 +8,7 @@ use Modules\UserManagement\Models\Role;
 use Illuminate\Database\Eloquent\Collection;
 use Modules\UserManagement\DTOs\Role\StoreRoleData;
 use Modules\UserManagement\DTOs\Role\UpdateRoleData;
+use Modules\UserManagement\Enums\Role as EnumsRole;
 
 class RoleRepository
 {
@@ -20,6 +21,7 @@ class RoleRepository
         $data = Role::query()
             ->select('id', 'organization_id', 'organization_type', 'slug', 'name', 'description', 'is_editable', 'created_by')
             ->where('organization_id', activeOrganizationId())
+            ->whereNotIn('name', [EnumsRole::VENDOR_OWNER->value, EnumsRole::SUPER_ADMIN->value])
             ->with('organization:id,name,email')
             ->with('createdBy:id,name,email')
             ->get();

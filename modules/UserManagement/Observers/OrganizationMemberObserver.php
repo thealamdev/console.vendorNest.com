@@ -20,7 +20,7 @@ class OrganizationMemberObserver
      */
     public function updated(OrganizationMember $organizationMember): void
     {
-        //
+        OrganizationMembersCache::forget();
     }
 
     /**
@@ -28,7 +28,7 @@ class OrganizationMemberObserver
      */
     public function deleted(OrganizationMember $organizationMember): void
     {
-        //
+        OrganizationMembersCache::forget();
     }
 
     /**
@@ -36,7 +36,7 @@ class OrganizationMemberObserver
      */
     public function restored(OrganizationMember $organizationMember): void
     {
-        //
+        OrganizationMembersCache::forget();
     }
 
     /**
@@ -44,6 +44,6 @@ class OrganizationMemberObserver
      */
     public function forceDeleted(OrganizationMember $organizationMember): void
     {
-        //
+        OrganizationMembersCache::forget();
     }
 }
