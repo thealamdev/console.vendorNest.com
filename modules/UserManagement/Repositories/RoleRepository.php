@@ -17,12 +17,14 @@ class RoleRepository
      */
     public function getAll(): Collection
     {
-        return Role::query()
+        $data = Role::query()
             ->select('id', 'organization_id', 'organization_type', 'slug', 'name', 'description', 'is_editable', 'created_by')
             ->where('organization_id', activeOrganizationId())
             ->with('organization:id,name,email')
             ->with('createdBy:id,name,email')
             ->get();
+
+        return $data;
     }
 
 

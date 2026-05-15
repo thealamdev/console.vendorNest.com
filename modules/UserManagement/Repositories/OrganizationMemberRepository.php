@@ -2,31 +2,58 @@
 
 namespace Modules\UserManagement\Repositories;
 
-use App\Support\Traits\HasCache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Services\UserResolverService;
-use App\Support\Cache\OrganizationMemberCache;
+use App\Support\Cache\OrganizationMembersCache;
+use App\Support\Cache\OrganizationMembershipsCache;
 use Modules\UserManagement\Models\MemberRole;
 use Modules\UserManagement\Models\OrganizationMember;
 use Modules\UserManagement\DTOs\OrganizationMember\StoreOrganizationMemberData;
 
+use function PHPUnit\Framework\callback;
+
 class OrganizationMemberRepository
 {
-    use HasCache;
-    public function getAll(): array
+    public function roles():array
     {
-        $data = $this->rememberCache(
-            key: OrganizationMemberCache::GET_CACHE_KEY . Auth::id(),
-            tags: OrganizationMemberCache::TAGS,
+        $data = OrganizationMember::query()
+            ->where('organization_id', activeOrganizationId())
+            ->where('user_id', Auth::id())
+            ->select('id', 'organization_id', 'user_id')
+            ->with('roles:id,organization_id,name,slug')
+            ->first()
+            ?->toArray();
+
+        return $data;
+    }
+
+    public function members(): array
+    {
+        $data = OrganizationMembersCache::remember(
+            callback: fn() => OrganizationMember::query()
+                ->where('organization_id', activeOrganizationId())
+                ->select('id', 'user_id', 'invited_by', 'organization_id')
+                ->with('user:id,name,email,type')
+                ->with('invitedBy:id,name,email,type')
+                ->get()
+                ->toArray()
+        );
+
+        return $data;
+    }
+
+    public function memberships(): array
+    {
+        $data = OrganizationMembershipsCache::remember(
             callback: fn() => OrganizationMember::where('user_id', Auth::id())
                 ->where('status', true)
                 ->select('id', 'user_id', 'organization_id')
                 ->with([
                     'organization:id,owner_user_id,type,name,email,phone',
                 ])
-
-                ->get()?->toArray()
+                ->get()?->toArray(),
+            ttl: 3600
         );
 
         return $data;

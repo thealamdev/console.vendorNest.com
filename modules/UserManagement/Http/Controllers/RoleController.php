@@ -21,7 +21,7 @@ class RoleController
 {
     public function getAll(RoleService $service)
     {
-        // Gate::authorize('getAll', Role::class);
+        Gate::authorize('getAll', Role::class);
         $response = $service->getAll();
         return ApiResponse::success(
             data: ListRoleResource::collection($response),

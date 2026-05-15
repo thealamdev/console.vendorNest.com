@@ -3,7 +3,6 @@
 namespace Modules\UserManagement\Repositories;
 
 use App\Support\Cache\OrganizationCache;
-use App\Support\Traits\HasCache;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -19,16 +18,14 @@ use Modules\UserManagement\Models\Permission;
 
 class OrganizationRepository implements OrganizationRepositoryInterface
 {
-    use HasCache;
+
     /**
      * Get specific organizer info
      * @return array|null
      */
     public function get(): array|null
     {
-        $data = $this->rememberCache(
-            key: OrganizationCache::GET_CACHE_KEY . Auth::id(),
-            tags: OrganizationCache::TAGS,
+        $data = OrganizationCache::remember(
             callback: fn() => Organization::query()
                 ->select('id', 'name', 'email', 'phone', 'type', 'owner_user_id')
                 ->where('owner_user_id', Auth::id())
@@ -69,8 +66,6 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 'is_editable'       => false,
                 'created_by'        => Auth::id()
             ]);
-
-
 
             $vendorPermissions = Permission::whereNotIn('module', ['platform', 'user', 'vendor', 'payout'])->pluck('id');
             $vendorOwnerRole->permissions()->sync($vendorPermissions);

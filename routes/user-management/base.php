@@ -31,7 +31,9 @@ Route::middleware('organization.context')->group(function () {
 
     Route::prefix('member')->name('member.')->group(function () {
         Route::controller(OrganizationMemberController::class)->group(function () {
-            Route::get('/getAll', 'getAll')->name('getAll')->withoutMiddleware(OrganizationContext::class);
+            Route::get('/roles', 'roles')->name('roles');
+            Route::get('/members', 'members')->name('members');
+            Route::get('/memberships', 'memberships')->name('memberships')->withoutMiddleware(OrganizationContext::class);
             Route::post('/store', 'store')->name('store');
         });
     });

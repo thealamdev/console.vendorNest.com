@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use Modules\AuthManagement\Models\User;
 use Modules\AuthManagement\DTOs\Register\RegisterData;
 use Modules\UserManagement\DTOs\OrganizationMember\StoreOrganizationMemberData;
+use Modules\UserManagement\Enums\UserType;
 
 class UserResolverService
 {
@@ -24,9 +25,10 @@ class UserResolverService
         }
 
         $user = User::create([
-            'name' => $data->name,
-            'email' => $data->email,
-            'password' => Hash::make($data->password)
+            'name'      => $data->name,
+            'email'     => $data->email,
+            'type'      => UserType::VENDOR->value,
+            'password'  => Hash::make($data->password)
         ]);
 
         $user->createToken('auth_token')->plainTextToken;
