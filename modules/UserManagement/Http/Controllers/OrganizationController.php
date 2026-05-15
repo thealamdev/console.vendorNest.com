@@ -37,7 +37,7 @@ class OrganizationController
             
             return ApiResponse::success(
                 data: new CheckOrgContextResource($response),
-                message: 'Organization created successfully'
+                message: 'Organization checked successfully'
             );
         } catch (\Exception $e) {
             return ApiResponse::error(

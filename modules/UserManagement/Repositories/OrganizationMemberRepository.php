@@ -11,8 +11,6 @@ use Modules\UserManagement\Models\MemberRole;
 use Modules\UserManagement\Models\OrganizationMember;
 use Modules\UserManagement\DTOs\OrganizationMember\StoreOrganizationMemberData;
 
-use function PHPUnit\Framework\callback;
-
 class OrganizationMemberRepository
 {
     public function roles():array
@@ -46,7 +44,7 @@ class OrganizationMemberRepository
     public function memberships(): array
     {
         $data = OrganizationMembershipsCache::remember(
-            callback: fn() => OrganizationMember::where('user_id', '01krmzgzgvs4xgs0mqxkq5kc3m')
+            callback: fn() => OrganizationMember::where('user_id', Auth::id())
                 ->where('status', true)
                 ->select('id', 'user_id', 'organization_id')
                 ->with([
