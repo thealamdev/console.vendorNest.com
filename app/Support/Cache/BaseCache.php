@@ -11,7 +11,7 @@ abstract class BaseCache
     abstract public static function key(): string;
 
     /**
-     * 
+     * Cache a collection of data.
      * @param callable $callback
      * @param int $ttl
      */

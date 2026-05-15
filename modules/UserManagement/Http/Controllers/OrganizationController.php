@@ -4,8 +4,11 @@ namespace Modules\UserManagement\Http\Controllers;
 
 use App\Support\Helpers\ApiResponse;
 use Illuminate\Http\JsonResponse;
+use Modules\UserManagement\DTOs\Organization\CheckOrgContextData;
 use Modules\UserManagement\DTOs\Organization\StoreOrganizationData;
+use Modules\UserManagement\Http\Requests\Organization\CheckOrgContextRequest;
 use Modules\UserManagement\Http\Requests\Organization\StoreOrganizationRequest;
+use Modules\UserManagement\Http\Resources\Organization\CheckOrgContextResource;
 use Modules\UserManagement\Http\Resources\Organization\StoreOrganizationResource;
 use Modules\UserManagement\Http\Resources\Organization\ListOrganizationResource;
 use Modules\UserManagement\Services\OrganizationService;
@@ -24,6 +27,24 @@ class OrganizationController
             data: new ListOrganizationResource($response),
             message: 'Organization get successfully'
         );
+    }
+
+    public function checkOrgContext(CheckOrgContextRequest $request, OrganizationService $service)
+    {
+        try {
+            $data = CheckOrgContextData::make($request);
+            $response = $service->checkOrgContext($data);
+            
+            return ApiResponse::success(
+                data: new CheckOrgContextResource($response),
+                message: 'Organization created successfully'
+            );
+        } catch (\Exception $e) {
+            return ApiResponse::error(
+                message: $e->getMessage(),
+                errors: $e
+            );
+        }
     }
 
     /**

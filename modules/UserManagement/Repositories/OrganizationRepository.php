@@ -6,6 +6,7 @@ use App\Support\Cache\OrganizationCache;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Modules\UserManagement\DTOs\Organization\CheckOrgContextData;
 use Modules\UserManagement\DTOs\Organization\StoreOrganizationData;
 use Modules\UserManagement\Enums\OrganizationType;
 use Modules\UserManagement\Interfaces\OrganizationRepositoryInterface;
@@ -18,7 +19,6 @@ use Modules\UserManagement\Models\Permission;
 
 class OrganizationRepository implements OrganizationRepositoryInterface
 {
-
     /**
      * Get specific organizer info
      * @return array|null
@@ -35,6 +35,18 @@ class OrganizationRepository implements OrganizationRepositoryInterface
         );
 
         return $data ?? null;
+    }
+    /**
+     * Check org context
+     * @param CheckOrgContextData $data
+     * @return bool
+     */
+    public function checkOrgContext(CheckOrgContextData $data):bool
+    {
+        $response = OrganizationMember::where('organization_id', $data->organization_id)
+            ->where('user_id', Auth::id())->exists();
+
+        return $response;
     }
 
     /**

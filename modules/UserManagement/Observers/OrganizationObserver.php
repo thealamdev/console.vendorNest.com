@@ -3,7 +3,6 @@
 namespace Modules\UserManagement\Observers;
 
 use App\Support\Cache\OrganizationCache;
-use Illuminate\Support\Facades\Cache;
 use Modules\UserManagement\Models\Organization;
 
 class OrganizationObserver
@@ -13,7 +12,7 @@ class OrganizationObserver
      */
     public function created(Organization $organization): void
     {
-        Cache::forget(OrganizationCache::GET_CACHE_KEY);
+        OrganizationCache::forget();
     }
 
     /**
@@ -21,7 +20,7 @@ class OrganizationObserver
      */
     public function updated(Organization $organization): void
     {
-        Cache::forget(OrganizationCache::GET_CACHE_KEY);
+        OrganizationCache::forget();
     }
 
     /**
@@ -29,7 +28,7 @@ class OrganizationObserver
      */
     public function deleted(Organization $organization): void
     {
-        Cache::forget(OrganizationCache::GET_CACHE_KEY);
+        OrganizationCache::forget();
     }
 
     /**
@@ -37,7 +36,7 @@ class OrganizationObserver
      */
     public function restored(Organization $organization): void
     {
-        Cache::forget(OrganizationCache::GET_CACHE_KEY);
+        OrganizationCache::forget();
     }
 
     /**
@@ -45,6 +44,6 @@ class OrganizationObserver
      */
     public function forceDeleted(Organization $organization): void
     {
-        Cache::forget(OrganizationCache::GET_CACHE_KEY);
+        OrganizationCache::forget();
     }
 }

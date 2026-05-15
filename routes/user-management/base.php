@@ -10,6 +10,7 @@ use Modules\UserManagement\Http\Controllers\RoleController;
 Route::prefix('organizer')->name('organizer.')->group(function () {
     Route::controller(OrganizationController::class)->group(function () {
         Route::get('/get', 'get')->name('get');
+        Route::post('/checkOrgContext', 'checkOrgContext')->name('checkOrgContext');
         Route::post('/store', 'store')->name('store');
     });
 });

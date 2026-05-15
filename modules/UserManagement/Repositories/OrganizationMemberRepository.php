@@ -46,7 +46,7 @@ class OrganizationMemberRepository
     public function memberships(): array
     {
         $data = OrganizationMembershipsCache::remember(
-            callback: fn() => OrganizationMember::where('user_id', Auth::id())
+            callback: fn() => OrganizationMember::where('user_id', '01krmzgzgvs4xgs0mqxkq5kc3m')
                 ->where('status', true)
                 ->select('id', 'user_id', 'organization_id')
                 ->with([

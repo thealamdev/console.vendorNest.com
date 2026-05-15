@@ -5,6 +5,8 @@ namespace App\Http\Middleware;
 use App\Support\Helpers\ApiResponse;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Modules\UserManagement\Models\OrganizationMember;
 use Symfony\Component\HttpFoundation\Response;
 
 class OrganizationContext
@@ -16,37 +18,32 @@ class OrganizationContext
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // 1. Auth first
+        $user = Auth::user();
+
+        if (!$user) {
+            return ApiResponse::error(message: 'Unauthenticated.', code: 401);
+        }
+
+        // 2. Then org context
         $orgId = $request->header('X-Organization-Id');
 
         if (!$orgId) {
-            return ApiResponse::error(
-                message: 'Organization context is required.',
-            );
+            return ApiResponse::error(message: 'Organization context is required.');
         }
 
+        // 3. Membership check
+        $isMember = OrganizationMember::query()
+            ->where('user_id', $user->id)
+            ->where('organization_id', $orgId)
+            ->exists();
 
-        // $user = Auth::user();
-
-        // if (!$user) {
-        //     return response()->json([
-        //         'message' => 'Unauthenticated.'
-        //     ], 401);
-        // }
-
-        // // 3. Check if user belongs to this organization
-        // $isMember = OrganizationMember::query()
-        //     ->where('user_id', $user->id)
-        //     ->where('organization_id', $orgId)
-        //     ->exists();
-
-        // if (!$isMember) {
-        //     return response()->json([
-        //         'message' => 'You are not a member of this organization.'
-        //     ], 403);
-        // }
-
-        // // 4. Attach organization context to request (IMPORTANT)
-        // $request->attributes->set('organization_id', (int) $orgId);
+        if (!$isMember) {
+            return ApiResponse::error(
+                message: 'You are not a member of this organization.',
+                code: 403
+            );
+        }
 
         return $next($request);
     }
