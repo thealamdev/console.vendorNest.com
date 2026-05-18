@@ -2,7 +2,7 @@
 
 namespace Modules\UserManagement\Services;
 
-use Modules\UserManagement\Actions\OrganizationMember\ListOrganizationMemberRoles;
+use Modules\UserManagement\Actions\OrganizationMember\ListOrganizationMemberRolesAction;
 use Modules\UserManagement\Actions\OrganizationMember\ListOrganizationMembersAction;
 use Modules\UserManagement\Actions\OrganizationMember\ListOrganizationMembershipsAction;
 use Modules\UserManagement\Models\OrganizationMember;
@@ -12,7 +12,7 @@ use Modules\UserManagement\Actions\OrganizationMember\StoreOrganizationMemberAct
 class OrganizationMemberService
 {
     public function __construct(
-        public ListOrganizationMemberRoles $listOrganizationMemberRoles,
+        public ListOrganizationMemberRolesAction $listOrganizationMemberRolesAction,
         public ListOrganizationMembersAction $listOrganizationMembersAction,
         public ListOrganizationMembershipsAction $listOrganizationMembershipsAction,
         public StoreOrganizationMemberAction $storeOrganizationMemberAction,
@@ -20,7 +20,7 @@ class OrganizationMemberService
 
     public function roles():array
     {
-        return $this->listOrganizationMemberRoles->execute();
+        return $this->listOrganizationMemberRolesAction->execute();
     }
 
     /**
