@@ -44,9 +44,10 @@ class StoreOrganizationMemberRequest extends BaseFormRequest
             ],
             'phone'             => 'required_without:user_id|unique:organizations,phone',
             'password'          => 'required_without:user_id|string|min:8|confirmed',
-            'role_id'           => [
+            'role_ids'          => 'required|array',
+            'role_ids.*'        => [
                 'required',
-                Rule::exists('roles','id')->where('organization_id', activeOrganizationId()),
+                Rule::exists('roles', 'id')->where('organization_id', activeOrganizationId()),
             ],
             'user_id'           => [
                 'nullable',

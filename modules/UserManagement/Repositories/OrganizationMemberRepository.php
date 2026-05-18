@@ -74,11 +74,13 @@ class OrganizationMemberRepository
                 'joined_at'         => now()
             ]);
 
-            MemberRole::create([
-                'organization_member_id'    => $member->id,
-                'role_id'                   => $data->role_id,
-                'assigned_by'               => Auth::id()
-            ]);
+            collect($data->role_ids)->map(function ($value, $key) use ($member) {
+                MemberRole::create([
+                    'organization_member_id'    => $member->id,
+                    'role_id'                   => $value,
+                    'assigned_by'               => Auth::id()
+                ]);
+            });
 
             return $member;
         });

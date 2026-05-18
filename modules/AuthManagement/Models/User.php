@@ -12,7 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Modules\UserManagement\Models\OrganizationMember;
 
-#[Fillable(['name', 'email', 'phone', 'password','type'])]
+#[Fillable(['name', 'email', 'phone', 'password', 'type'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -61,5 +61,14 @@ class User extends Authenticatable
                 $q->where('slug', $permission);
             })
             ->exists();
+    }
+
+    public function allPermissions()
+    {
+        return $this->memberships()
+            ->where('organization_id', activeOrganizationId())
+            ->whereHas('roles.permissions', function ($q) {
+                $q->select('slug');
+            });
     }
 }
