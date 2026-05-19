@@ -19,6 +19,7 @@ class ListOrganizationMembersResource extends JsonResource
         }
 
         return [
+            'id'                => $this->resource['id'],
             'user_name'         => $this->resource['user']['name'],
             'user_email'        => $this->resource['user']['email'],
             'user_type'         => $this->resource['user']['type'],

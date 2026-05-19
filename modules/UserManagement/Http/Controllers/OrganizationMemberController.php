@@ -16,7 +16,11 @@ use Modules\UserManagement\Services\OrganizationMemberService;
 
 class OrganizationMemberController
 {
-
+    /**
+     * Get all roles of member
+     * @param OrganizationMemberService $service
+     * @return JsonResponse
+     */
     public function roles(OrganizationMemberService $service): JsonResponse
     {
         $response = $service->roles();
@@ -43,7 +47,7 @@ class OrganizationMemberController
     /**
      * Get orgs this user belongs to
      * @param OrganizationMemberService $service
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function memberships(OrganizationMemberService $service): JsonResponse
     {
@@ -54,6 +58,12 @@ class OrganizationMemberController
         );
     }
 
+    /**
+     * Store a member info
+     * @param StoreOrganizationMemberRequest $request
+     * @param OrganizationMemberService $service
+     * @return JsonResponse
+     */
     public function store(StoreOrganizationMemberRequest $request, OrganizationMemberService $service)
     {
         Gate::authorize('store', OrganizationMember::class);
@@ -70,5 +80,17 @@ class OrganizationMemberController
                 errors: $e
             );
         }
+    }
+
+    public function show(string $organizationMember)
+    {
+        $member = OrganizationMember::query()
+            ->select('id', 'user_id', 'organization_id')
+            ->where('id', $organizationMember)
+            ->with('roles:name,organization_id,organization_type,slug,description')
+            ->first()
+            ->toArray();
+
+        dd($member);
     }
 }
