@@ -27,6 +27,7 @@ Route::middleware('organization.context')->group(function () {
     Route::prefix('permissions')->name('permissions.')->group(function () {
         Route::controller(PermissionController::class)->group(function () {
             Route::get('/get/{role_id}', 'get')->name('get');
+            Route::get('permissionsGroupByModule', 'permissionsGroupByModule')->name('permissionsGroupByModule');
             Route::get('/memberPermissions', 'memberPermissions')->name('memberPermissions');
         });
     });

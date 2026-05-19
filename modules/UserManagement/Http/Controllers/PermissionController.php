@@ -3,14 +3,21 @@
 namespace Modules\UserManagement\Http\Controllers;
 
 use App\Support\Helpers\ApiResponse;
-use Illuminate\Support\Facades\Auth;
-use Modules\UserManagement\Models\OrganizationMember;
+use Illuminate\Http\JsonResponse;
+use Modules\UserManagement\Http\Resources\Permission\ListMemberPermissionResource;
+use Modules\UserManagement\Http\Resources\Permission\ListPermissionGroupByModuleResource;
 use Modules\UserManagement\Services\PermissionService;
 use Modules\UserManagement\Http\Resources\Permission\ListPermissionResource;
 
 class PermissionController
 {
-    public function get(string $roleId, PermissionService $service)
+    /**
+     * Get all permissions by role
+     * @param string $roleId
+     * @param PermissionService $service
+     * @return JsonResponse
+     */
+    public function get(string $roleId, PermissionService $service): JsonResponse
     {
         $response = $service->get($roleId);
         return ApiResponse::success(
@@ -19,22 +26,21 @@ class PermissionController
         );
     }
 
-    public function memberPermissions()
+    public function permissionsGroupByModule(PermissionService $service)
     {
-        $permissions = OrganizationMember::where('user_id', Auth::id())
-            ->where('organization_id', activeOrganizationId())
-            ->with('roles.permissions:id,slug')
-            ->first()
-            ?->roles
-            ->pluck('permissions')
-            ->flatten()
-            ->pluck('slug')
-            ->unique()
-            ->values();
-
+        $reponse = $service->permissionsGroupByModule();
         return ApiResponse::success(
-            data: $permissions,
+            data: new ListPermissionGroupByModuleResource($reponse),
             message: 'Permission get successfully'
+        );
+    }
+
+    public function memberPermissions(PermissionService $service)
+    {
+        $reponse = $service->memberPermissions();
+        return ApiResponse::success(
+            data: new ListMemberPermissionResource($reponse),
+            message: 'Get member permissions'
         );
     }
 }

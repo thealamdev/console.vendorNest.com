@@ -2,10 +2,12 @@
 
 namespace Modules\UserManagement\Repositories;
 
+use Illuminate\Support\Facades\Auth;
 use Modules\UserManagement\Models\Role;
 use Modules\UserManagement\Models\Permission;
 use Modules\UserManagement\DTOs\Permission\StorePermissionData;
 use Modules\UserManagement\DTOs\Permission\UpdatePermissionData;
+use Modules\UserManagement\Models\OrganizationMember;
 
 class PermissionRepository
 {
@@ -18,7 +20,6 @@ class PermissionRepository
         $data = Role::query()
             ->where('id', $roleId)
             ->select('id', 'organization_id', 'slug', 'name')
-            // ->where('organization_id', activeOrganizationId())
             ->with([
                 'permissions:id,module,name,slug'
             ])
@@ -26,6 +27,42 @@ class PermissionRepository
             ?->toArray();
 
         return $data;
+    }
+
+    /**
+     * Get all permissions of vendor
+     * @return array
+     */
+    public function permissionsGroupByModule(): array
+    {
+        $reponse =  Permission::whereNotIn('module', ['platform', 'user', 'vendor', 'payout'])
+            ->get()
+            ->groupBy('module')
+            ->map(fn($q) => $q->pluck('slug'))
+            ->toArray();
+
+        return $reponse;
+    }
+
+    /**
+     * Get member permissions
+     * @return array
+     */
+    public function memberPermissions(): array
+    {
+        $response = OrganizationMember::where('user_id', Auth::id())
+            ->where('organization_id', activeOrganizationId())
+            ->with('roles.permissions:id,slug')
+            ->first()
+            ?->roles
+            ->pluck('permissions')
+            ->flatten()
+            ->pluck('slug')
+            ->unique()
+            ->values()
+            ?->toArray();
+
+        return $response;
     }
 
     /**
