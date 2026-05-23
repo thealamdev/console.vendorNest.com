@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\UserResolverService;
 use App\Support\Cache\OrganizationMembersCache;
 use App\Support\Cache\OrganizationMembershipsCache;
-use Modules\UserManagement\Models\MemberRole;
 use Modules\UserManagement\Models\OrganizationMember;
 use Modules\UserManagement\DTOs\OrganizationMember\StoreOrganizationMemberData;
 
@@ -33,6 +32,7 @@ class OrganizationMemberRepository
                 ->where('organization_id', activeOrganizationId())
                 ->select('id', 'user_id', 'invited_by', 'organization_id')
                 ->with('user:id,name,email,type')
+                ->with('roles:id,organization_id,name,slug')
                 ->with('invitedBy:id,name,email,type')
                 ->get()
                 ?->toArray()
@@ -74,15 +74,28 @@ class OrganizationMemberRepository
                 'joined_at'         => now()
             ]);
 
-            collect($data->role_ids)->map(function ($value, $key) use ($member) {
-                MemberRole::create([
-                    'organization_member_id'    => $member->id,
-                    'role_id'                   => $value,
-                    'assigned_by'               => Auth::id()
-                ]);
-            });
+            $member->roles()->attach($data->role_ids, ['assigned_by' => Auth::id()]);
 
             return $member;
         });
+    }
+
+    /**
+     * Get the organization member details
+     * @param string $id
+     * @return array
+     */
+    public function show(string $id): array
+    {
+        $data = OrganizationMember::query()
+            ->where('id', $id)
+            ->select('id', 'user_id', 'invited_by', 'organization_id')
+            ->with('user:id,name,email,type')
+            ->with('roles:id,organization_id,name,slug')
+            ->with('invitedBy:id,name,email,type')
+            ->firstOrFail()
+            ?->toArray();
+
+        return $data;
     }
 }

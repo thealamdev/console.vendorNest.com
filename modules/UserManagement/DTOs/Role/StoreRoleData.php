@@ -11,7 +11,7 @@ class StoreRoleData
         public ?string $organization_id = '',
         public string $organization_type = '',
         public string $name = '',
-        public string $description = '',
+        public ?string $description = '',
         public bool $is_editable = true,
     ) {}
 

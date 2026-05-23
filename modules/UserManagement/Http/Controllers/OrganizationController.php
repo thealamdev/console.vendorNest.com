@@ -2,6 +2,7 @@
 
 namespace Modules\UserManagement\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Support\Helpers\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Modules\UserManagement\DTOs\Organization\CheckOrgContextData;
@@ -13,28 +14,35 @@ use Modules\UserManagement\Http\Resources\Organization\StoreOrganizationResource
 use Modules\UserManagement\Http\Resources\Organization\ListOrganizationResource;
 use Modules\UserManagement\Services\OrganizationService;
 
-class OrganizationController
+class OrganizationController extends Controller
 {
     /**
-     * Get organizer info
+     * Initialize OrganizationService service
      * @param OrganizationService $service
-     * @return never
      */
-    public function get(OrganizationService $service): JsonResponse
+    public function __construct(
+        public OrganizationService $service
+    ) {}
+
+    /**
+     * Get organizer info
+     * @return JsonResponse
+     */
+    public function get(): JsonResponse
     {
-        $response = $service->get();
+        $response = $this->service->get();
         return ApiResponse::success(
             data: new ListOrganizationResource($response),
             message: 'Organization get successfully'
         );
     }
 
-    public function checkOrgContext(CheckOrgContextRequest $request, OrganizationService $service)
+    public function checkOrgContext(CheckOrgContextRequest $request)
     {
         try {
             $data = CheckOrgContextData::make($request);
-            $response = $service->checkOrgContext($data);
-            
+            $response = $this->service->checkOrgContext($data);
+
             return ApiResponse::success(
                 data: new CheckOrgContextResource($response),
                 message: 'Organization checked successfully'
@@ -50,14 +58,13 @@ class OrganizationController
     /**
      * Store Organization data
      * @param StoreOrganizationRequest $request
-     * @param OrganizationService $service
-     * @return never
+     * @return JsonResponse
      */
-    public function store(StoreOrganizationRequest $request, OrganizationService $service): JsonResponse
+    public function store(StoreOrganizationRequest $request): JsonResponse
     {
         try {
             $data = StoreOrganizationData::make($request);
-            $response = $service->store($data);
+            $response = $this->service->store($data);
             return ApiResponse::success(
                 data: new StoreOrganizationResource($response),
                 message: 'Organization created successfully'

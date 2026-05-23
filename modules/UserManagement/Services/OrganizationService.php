@@ -15,7 +15,6 @@ class OrganizationService
         public ListOrganizationAction $listOrganizationAction,
         public CheckOrgContextAction $checkOrgContextAction,
         public StoreOrganizationAction $storeOrganizationAction
-
     ) {}
 
     public function get()

@@ -4,14 +4,14 @@ namespace Modules\UserManagement\Actions\OrganizationMember;
 
 use Modules\UserManagement\Repositories\OrganizationMemberRepository;
 
-class ListOrganizationMembersAction
+readonly class ListOneOrganizationMemberAction
 {
     public function __construct(
         public OrganizationMemberRepository $repo
     ) {}
 
-    public function execute()
+    public function execute(string $id): array
     {
-        return $this->repo->members();
+        return $this->repo->show($id);
     }
 }

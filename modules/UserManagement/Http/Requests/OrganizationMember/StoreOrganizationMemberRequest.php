@@ -26,6 +26,7 @@ class StoreOrganizationMemberRequest extends BaseFormRequest
     {
         return [
             'name'              => 'required_without:user_id|string|max:30',
+            'description'       => 'nullable|string|max:255',
             'email'             => [
                 'required_without:user_id',
                 'unique:organizations,email',

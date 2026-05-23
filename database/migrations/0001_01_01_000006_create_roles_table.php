@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('organization_id')->references('id')->on('organizations')->nullOnDelete();
             $table->string('name');
             $table->string('slug');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->boolean('is_system_role')->default(false);
             $table->boolean('is_editable')->default(true);
             $table->foreignUlid('created_by')->constrained('users');

@@ -10,7 +10,6 @@ use Modules\AuthManagement\Models\User;
 use Modules\UserManagement\Enums\OrganizationType;
 use Modules\UserManagement\Enums\Role as EnumsRole;
 use Modules\UserManagement\Enums\UserType;
-use Modules\UserManagement\Models\MemberRole;
 use Modules\UserManagement\Models\Organization;
 use Modules\UserManagement\Models\OrganizationMember;
 use Modules\UserManagement\Models\Role;
@@ -75,11 +74,7 @@ class BootstrapPlatformSeeder extends Seeder
                 'joined_at'         => now()
             ]);
 
-            MemberRole::create([
-                'organization_member_id'    => $member->id,
-                'role_id'                   => $superAdminRole->id,
-                'assigned_by'               => $user->id
-            ]);
+            $member->roles()->attach($superAdminRole->id, ['assigned_by' => $user->id]);
         });
     }
 }

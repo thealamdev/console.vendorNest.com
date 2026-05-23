@@ -2,6 +2,7 @@
 
 namespace Modules\UserManagement\Services;
 
+use Modules\UserManagement\Actions\OrganizationMember\ListOneOrganizationMemberAction;
 use Modules\UserManagement\Actions\OrganizationMember\ListOrganizationMemberRolesAction;
 use Modules\UserManagement\Actions\OrganizationMember\ListOrganizationMembersAction;
 use Modules\UserManagement\Actions\OrganizationMember\ListOrganizationMembershipsAction;
@@ -12,13 +13,14 @@ use Modules\UserManagement\Actions\OrganizationMember\StoreOrganizationMemberAct
 class OrganizationMemberService
 {
     public function __construct(
+        public ListOneOrganizationMemberAction $listOneOrganizationMemberAction,
         public ListOrganizationMemberRolesAction $listOrganizationMemberRolesAction,
         public ListOrganizationMembersAction $listOrganizationMembersAction,
         public ListOrganizationMembershipsAction $listOrganizationMembershipsAction,
         public StoreOrganizationMemberAction $storeOrganizationMemberAction,
     ) {}
 
-    public function roles():array
+    public function roles(): array
     {
         return $this->listOrganizationMemberRolesAction->execute();
     }
@@ -41,7 +43,6 @@ class OrganizationMemberService
         return $this->listOrganizationMembershipsAction->execute();
     }
 
-
     /**
      * Execute the organization member store action.
      * @param StoreOrganizationMemberData $data
@@ -50,5 +51,15 @@ class OrganizationMemberService
     public function store(StoreOrganizationMemberData $data): OrganizationMember
     {
         return $this->storeOrganizationMemberAction->execute($data);
+    }
+
+    /**
+     * Execute the organization member show action.
+     * @param string $id
+     * @return array
+     */
+    public function show(string $id): array
+    {
+        return $this->listOneOrganizationMemberAction->execute($id);
     }
 }

@@ -38,7 +38,8 @@ Route::middleware('organization.context')->group(function () {
             Route::get('/members', 'members')->name('members');
             Route::get('/memberships', 'memberships')->name('memberships')->withoutMiddleware(OrganizationContext::class);
             Route::post('/store', 'store')->name('store');
-            Route::get('/show/{organizationMember}', 'show')->name('show');
+            Route::get('/show/{memberId}', 'show')->name('show');
+            Route::put('/update/{memberId}', 'update')->name('update');
         });
     });
 });

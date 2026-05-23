@@ -10,7 +10,6 @@ use Modules\UserManagement\DTOs\Organization\CheckOrgContextData;
 use Modules\UserManagement\DTOs\Organization\StoreOrganizationData;
 use Modules\UserManagement\Enums\OrganizationType;
 use Modules\UserManagement\Interfaces\OrganizationRepositoryInterface;
-use Modules\UserManagement\Models\MemberRole;
 use Modules\UserManagement\Models\Organization;
 use Modules\UserManagement\Models\OrganizationMember;
 use Modules\UserManagement\Models\Role;
@@ -41,7 +40,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
      * @param CheckOrgContextData $data
      * @return bool
      */
-    public function checkOrgContext(CheckOrgContextData $data):bool
+    public function checkOrgContext(CheckOrgContextData $data): bool
     {
         $response = OrganizationMember::where('organization_id', $data->organization_id)
             ->where('user_id', Auth::id())->exists();
@@ -89,11 +88,7 @@ class OrganizationRepository implements OrganizationRepositoryInterface
                 'joined_at'         => now()
             ]);
 
-            MemberRole::create([
-                'organization_member_id'    => $member->id,
-                'role_id'                   => $vendorOwnerRole->id,
-                'assigned_by'               => Auth::id()
-            ]);
+            $member->roles()->attach($vendorOwnerRole->id, ['assigned_by' => Auth::id()]);
 
             return $organization;
         });
