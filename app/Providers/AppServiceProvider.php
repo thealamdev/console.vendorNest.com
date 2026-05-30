@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Modules\AuthManagement\Models\User;
@@ -25,5 +26,8 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('canAccess', function (User $user) {
             return $user->type !== UserType::BUYER->value;
         });
+
+        Broadcast::routes(['prefix' => 'api', 'middleware' => ['auth:sanctum']]);
+        require base_path('routes/channels.php');
     }
 }
