@@ -19,7 +19,7 @@ class PermissionRepository
     {
         $data = Role::query()
             ->where('id', $roleId)
-            ->select('id', 'organization_id', 'slug', 'name')
+            ->select('id', 'organization_id', 'slug', 'name','description','is_editable')
             ->with([
                 'permissions:id,module,name,slug'
             ])

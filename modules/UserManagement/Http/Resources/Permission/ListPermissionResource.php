@@ -16,8 +16,11 @@ class ListPermissionResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id'            => $this->resource['id'],
             'name'          => $this->resource['name'],
             'slug'          => $this->resource['slug'],
+            'description'   => $this->resource['description'],
+            'is_editable'   => $this->resource['is_editable'],
             'permissions'   => $this->permisions($this->resource['permissions']) ?? []
         ];
     }
