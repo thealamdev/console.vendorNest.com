@@ -4,7 +4,7 @@ namespace Modules\UserManagement\DTOs\Permission;
 
 use Modules\UserManagement\Http\Requests\RolePermission\StoreRolePermissionRequest;
 
-class StorePermissionData
+readonly class StorePermissionData
 {
     public function __construct(
         public ?array $permissions = [],

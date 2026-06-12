@@ -4,7 +4,7 @@ namespace Modules\UserManagement\DTOs\OrganizationMember;
 
 use Modules\UserManagement\Http\Requests\OrganizationMember\UpdateOrganizationMemberRequest;
 
-class UpdateOrganizationMemberData
+readonly class UpdateOrganizationMemberData
 {
     public function __construct(
         public ?array $role_ids = [],

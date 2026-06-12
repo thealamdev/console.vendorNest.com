@@ -4,7 +4,7 @@ namespace Modules\UserManagement\DTOs\Role;
 
 use Modules\UserManagement\Http\Requests\RolePermission\UpdateRolePermissionRequest;
 
-class UpdateRoleData
+readonly class UpdateRoleData
 {
     public function __construct(
         public ?string $organization_id = '',

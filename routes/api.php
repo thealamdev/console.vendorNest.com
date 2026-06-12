@@ -12,4 +12,8 @@ Route::middleware(['auth:sanctum', 'throttle:60,1', 'can:canAccess'])->group(fun
     Route::prefix('user-management')->name('user-management.')->group(function () {
         require __DIR__ . '/user-management/base.php';
     });
+
+    Route::prefix('product-management')->name('product-management.')->group(function () {
+        require __DIR__ . '/product-management/base.php';
+    });
 });

@@ -5,7 +5,7 @@ namespace Modules\UserManagement\DTOs\Role;
 use Modules\UserManagement\Http\Requests\RolePermission\StoreRolePermissionRequest;
 
 
-class StoreRoleData
+readonly class StoreRoleData
 {
     public function __construct(
         public ?string $organization_id = '',

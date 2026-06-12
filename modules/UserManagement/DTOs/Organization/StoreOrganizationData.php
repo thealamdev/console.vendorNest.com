@@ -4,7 +4,7 @@ namespace Modules\UserManagement\DTOs\Organization;
 
 use Modules\UserManagement\Http\Requests\Organization\StoreOrganizationRequest;
 
-class StoreOrganizationData
+readonly class StoreOrganizationData
 {
     public function __construct(
         public string $type = '',

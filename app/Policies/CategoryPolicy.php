@@ -37,7 +37,7 @@ class CategoryPolicy
      */
     public function update(User $user, Category $category): bool
     {
-        return false;
+        return $user->hasPermission(PermissionEnum::CATEGORY_UPDATE->value, activeOrganizationId());
     }
 
     /**
@@ -45,7 +45,7 @@ class CategoryPolicy
      */
     public function delete(User $user, Category $category): bool
     {
-        return false;
+        return $user->hasPermission(PermissionEnum::CATEGORY_DELETE->value, activeOrganizationId());
     }
 
     /**

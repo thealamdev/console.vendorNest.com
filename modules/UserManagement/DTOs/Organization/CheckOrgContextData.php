@@ -4,7 +4,7 @@ namespace Modules\UserManagement\DTOs\Organization;
 
 use Modules\UserManagement\Http\Requests\Organization\CheckOrgContextRequest;
 
-class CheckOrgContextData
+readonly class CheckOrgContextData
 {
     public function __construct(
         public string $organization_id = '',
